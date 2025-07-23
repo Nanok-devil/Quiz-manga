@@ -93,34 +93,60 @@
     {% set bg = "background-color: #222;" %}
 {% endif %}
 <body style="{{ bg }}">
-    <div class="container">
-        <h1>Quiz : {{ category.replace('-', ' ').title() }}</h1>
-        <form method="post">
-            {% for q in questions %}
-                {% set q_idx = loop.index0 %}
-                <div class="question">
-                    <p><strong>{{ loop.index }}. {{ q.question }}</strong></p>
-                    {% for opt in q.options %}
-                        {% set opt_id = 'q' ~ q_idx ~ '_' ~ loop.index0 %}
-                        <input type="radio" id="{{ opt_id }}" name="q{{ q_idx }}" value="{{ opt }}" {% if user_answers[q_idx] == opt %}checked{% endif %}>
-                        <label for="{{ opt_id }}">{{ opt }}</label><br>
-                    {% endfor %}
-                    {% if show_result %}
-                        {% if user_answers[q_idx] == correct_answers[q_idx] %}
-                            <p class="correct">Bonne réponse !</p>
-                        {% else %}
-                            <p class="incorrect">Faux. La bonne réponse était : {{ correct_answers[q_idx] }}</p>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4895417852805262" crossorigin="anonymous"></script>
+    <div style="display: flex; flex-direction: row; justify-content: center; align-items: flex-start;">
+        <!-- Pub gauche -->
+        <div style="width: 160px; min-width: 120px; margin-right: 20px;">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4895417852805262"
+                 data-ad-slot="YYYYYYYYYYYY"
+                 data-ad-format="auto"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        <div class="container">
+            <h1>Quiz : {{ category.replace('-', ' ').title() }}</h1>
+            <form method="post">
+                {% for q in questions %}
+                    {% set q_idx = loop.index0 %}
+                    <div class="question">
+                        <p><strong>{{ loop.index }}. {{ q.question }}</strong></p>
+                        {% for opt in q.options %}
+                            {% set opt_id = 'q' ~ q_idx ~ '_' ~ loop.index0 %}
+                            <input type="radio" id="{{ opt_id }}" name="q{{ q_idx }}" value="{{ opt }}" {% if user_answers[q_idx] == opt %}checked{% endif %}>
+                            <label for="{{ opt_id }}">{{ opt }}</label><br>
+                        {% endfor %}
+                        {% if show_result %}
+                            {% if user_answers[q_idx] == correct_answers[q_idx] %}
+                                <p class="correct">Bonne réponse !</p>
+                            {% else %}
+                                <p class="incorrect">Faux. La bonne réponse était : {{ correct_answers[q_idx] }}</p>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
-                </div>
-            {% endfor %}
-            <button type="submit">Valider</button>
-        </form>
+                    </div>
+                {% endfor %}
+                <button type="submit">Valider</button>
+            </form>
 
-        {% if show_result %}
-            <h2>Score : {{ score }} / {{ questions|length }}</h2>
-            <a href="/" class="home-link">Retour à l'accueil</a>
-        {% endif %}
-    </div>
+            {% if show_result %}
+                <h2>Score : {{ score }} / {{ questions|length }}</h2>
+                <a href="/" class="home-link">Retour à l'accueil</a>
+            {% endif %}
+        </div>
+        <!-- Pub droite -->
+        <div style="width: 160px; min-width: 120px; margin-left: 20px;">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXX"
+                 data-ad-slot="YYYYYYYYYYYY"
+                 data-ad-format="auto"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div> <!-- fin du flex row -->
 </body>
 </html>
