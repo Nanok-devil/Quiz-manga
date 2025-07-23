@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz {{ category }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #fff;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 40px auto;
+            background: #333;
+            border-radius: 12px;
+            padding: 30px 30px 20px 30px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .question {
+            margin-bottom: 25px;
+        }
+        .correct {
+            color: #4caf50;
+        }
+        .incorrect {
+            color: #f44336;
+        }
+        button[type="submit"] {
+            display: block;
+            margin: 30px auto 0 auto;
+            padding: 12px 32px;
+            font-size: 1.1em;
+            background: #00bcd4;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button[type="submit"]:hover {
+            background: #0097a7;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .home-link {
+            display: block;
+            margin: 30px auto 0 auto;
+            padding: 12px 32px;
+            font-size: 1.1em;
+            background: #444;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.2s;
+            text-align: center;
+            width: fit-content;
+        }
+        .home-link:hover {
+            background: #00bcd4;
+            color: #222;
+        }
+    </style>
+</head>
+{% set bg = '' %}
+{% if category == 'naruto' %}
+    {% set bg = "background-image: linear-gradient(rgba(20,20,20,0.8), rgba(20,20,20,0.8)), url('https://wallpapercave.com/wp/wp2755660.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" %}
+{% elif category == 'dbz' %}
+    {% set bg = "background-image: linear-gradient(rgba(20,20,20,0.8), rgba(20,20,20,0.8)), url('https://images8.alphacoders.com/100/1006632.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" %}
+{% elif category == 'onepiece' %}
+    {% set bg = "background-image: linear-gradient(rgba(20,20,20,0.8), rgba(20,20,20,0.8)), url('https://images2.alphacoders.com/582/582804.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" %}
+{% elif category == 'tokyorevengers' %}
+    {% set bg = "background-image: linear-gradient(rgba(20,20,20,0.8), rgba(20,20,20,0.8)), url('https://images6.alphacoders.com/115/1159137.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" %}
+{% elif category == 'blackclover' %}
+    {% set bg = "background-image: linear-gradient(rgba(20,20,20,0.8), rgba(20,20,20,0.8)), url('https://images2.alphacoders.com/103/1038917.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" %}
+{% elif category == 'fairytail' %}
+    {% set bg = "background-image: linear-gradient(rgba(20,20,20,0.8), rgba(20,20,20,0.8)), url('https://images2.alphacoders.com/582/582797.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat;" %}
+{% else %}
+    {% set bg = "background-color: #222;" %}
+{% endif %}
+<body style="{{ bg }}">
+    <div class="container">
+        <h1>Quiz : {{ category.replace('-', ' ').title() }}</h1>
+        <form method="post">
+            {% for q in questions %}
+                {% set q_idx = loop.index0 %}
+                <div class="question">
+                    <p><strong>{{ loop.index }}. {{ q.question }}</strong></p>
+                    {% for opt in q.options %}
+                        {% set opt_id = 'q' ~ q_idx ~ '_' ~ loop.index0 %}
+                        <input type="radio" id="{{ opt_id }}" name="q{{ q_idx }}" value="{{ opt }}" {% if user_answers[q_idx] == opt %}checked{% endif %}>
+                        <label for="{{ opt_id }}">{{ opt }}</label><br>
+                    {% endfor %}
+                    {% if show_result %}
+                        {% if user_answers[q_idx] == correct_answers[q_idx] %}
+                            <p class="correct">Bonne réponse !</p>
+                        {% else %}
+                            <p class="incorrect">Faux. La bonne réponse était : {{ correct_answers[q_idx] }}</p>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit">Valider</button>
+        </form>
+
+        {% if show_result %}
+            <h2>Score : {{ score }} / {{ questions|length }}</h2>
+            <a href="/" class="home-link">Retour à l'accueil</a>
+        {% endif %}
+    </div>
+</body>
+</html>
